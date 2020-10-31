@@ -26,6 +26,38 @@ class GoTrue {
     return Token.fromJson(response.data);
   }
 
+  Future<String> loginExternalProvider(String provider) async {
+    var response =
+        await _dio().get('/authorize', queryParameters: {'provider': provider});
+
+    return response.data;
+  }
+
+  Future<Token> refresh(String refreshToken) async {
+    var formData = FormData.fromMap({
+      'refresh_token': refreshToken,
+      'grant_type': 'refresh_token',
+    });
+    var response = await _dio().post('/token', data: formData);
+    return Token.fromJson(response.data);
+  }
+
+  Future<User> signup(String email, String password) async {
+    var response = await _dio().post('/signup', data: {
+      'email': 'email',
+      'password': password,
+    });
+    return User.fromJson(response.data);
+  }
+
+  Future<Token> confirmSignup(String token) async {
+    var response = await _dio().post('/verify', data: {
+      'type': 'signup',
+      'token': token,
+    });
+    return Token.fromJson(response.data);
+  }
+
   Future<User> user(String accessToken) async {
     var response = await _dio().get(
       '/user',
