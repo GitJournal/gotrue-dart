@@ -1,3 +1,5 @@
+import 'package:gotrue/gotrue.dart';
+import 'package:gotrue/src/token.dart';
 import 'package:meta/meta.dart';
 import 'package:dio/dio.dart';
 
@@ -9,8 +11,30 @@ class GoTrue {
   }
 
   Future<GoTrueSettings> settings() async {
-    var response = await Dio(BaseOptions(baseUrl: apiUrl)).get('/settings');
+    var response = await _dio().get('/settings');
     return GoTrueSettings.fromJson(response.data);
+  }
+
+  Future<Token> login(String email, String password) async {
+    var formData = FormData.fromMap({
+      'username': email,
+      'password': password,
+      'grant_type': 'password',
+    });
+    var response = await _dio().post('/token', data: formData);
+    return Token.fromJson(response.data);
+  }
+
+  Future<User> user(String accessToken) async {
+    var response = await _dio().get(
+      '/user',
+      options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
+    );
+    return User.fromJson(response.data);
+  }
+
+  Dio _dio() {
+    return Dio(BaseOptions(baseUrl: apiUrl));
   }
 }
 
@@ -32,6 +56,17 @@ class GoTrueSettings {
       extern: GoTrueExternalSettings.fromJson(map['external']),
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'external': extern,
+      'autoconfirm': autoconfirm,
+      'disable_signup': disableSignup,
+    };
+  }
+
+  @override
+  String toString() => toJson().toString();
 }
 
 class GoTrueExternalSettings {
@@ -64,6 +99,21 @@ class GoTrueExternalSettings {
       saml: map['saml'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'bitbucket': bitbucket,
+      'github': github,
+      'gitlab': gitlab,
+      'google': google,
+      'facebook': facebook,
+      'email': email,
+      'saml': saml,
+    };
+  }
+
+  @override
+  String toString() => toJson().toString();
 }
 
 // API URL
@@ -78,5 +128,3 @@ class GoTrueExternalSettings {
 // logout
 // update
 // refresh
-
-class User {}

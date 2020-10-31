@@ -20,3 +20,19 @@ main() {
 Please file feature requests and bugs at the [issue tracker][tracker].
 
 [tracker]: http://example.com/issues/replaceme
+
+// Admin
+// -> listUsers
+// -> getUser
+// -> updateUser
+// -> createUser
+// -> deleteUser
+
+// User
+
+// signup (email, password, data) -> User
+// login (email, password) -> User
+// loginExternalUrl -> User
+// confirm(token) -> User
+// requestPasswordRecovery(email)
+// recover(token)
