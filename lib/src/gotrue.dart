@@ -1,7 +1,8 @@
+import 'package:dio/dio.dart';
+
 import 'package:gotrue/gotrue.dart';
 import 'package:gotrue/src/settings.dart';
 import 'package:gotrue/src/token.dart';
-import 'package:dio/dio.dart';
 
 class GoTrue {
   final String apiUrl;
