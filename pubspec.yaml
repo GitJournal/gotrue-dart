@@ -1,14 +1,18 @@
 name: gotrue
-description: A starting point for Dart libraries or applications.
-# version: 1.0.0
-# homepage: https://www.example.com
+description: >
+  Dart API for GoTrue - An SWT based API for managing users and issuing SWT tokens.
+  This library supports Dart Native, and Flutter for mobile, web, and desktop.
+
+version: 1.0.0
+homepage: https://github.com/GitJournal/gotrue-dart
 
 environment:
-  sdk: '>=2.8.1 <3.0.0'
+  sdk: ">=2.8.1 <3.0.0"
 
-#dependencies:
-#  path: ^1.7.0
+dependencies:
+  dio: ^3.0.10
 
 dev_dependencies:
   pedantic: ^1.9.0
   test: ^1.14.4
+  args: ^1.6.0
